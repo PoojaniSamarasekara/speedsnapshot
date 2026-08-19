@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">speedsnapshot</string>
+    <string name="speed_accuracy_format">Speed: %1$.2f m/s\nAccuracy: %2$.1f m</string>
+    <string name="searching_gps">Searching for GPS…</string>
+    <string name="location_updates_started">Location updates started</string>
+    <string name="error_permission_denied">Error: Permission denied</string>
+    <string name="updates_stopped">Updates stopped</string>
+    <string name="location_updates_stopped">Location updates stopped</string>
+    <string name="grant_location_permission">Please grant location permission</string>
+    <string name="speed_initial_text">Speed: — m/s\nAccuracy: — m</string>
+    <string name="start_button">Start</string>
+    <string name="stop_button">Stop</string>
 </resources>

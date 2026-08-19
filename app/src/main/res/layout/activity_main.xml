@@ -10,7 +10,7 @@
         android:id="@+id/tvSpeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Speed: -- m/s\nAccuracy: -- m"
+        android:text="@string/speed_initial_text"
         android:textSize="22sp"
         android:gravity="center"
         android:layout_marginBottom="32dp" />
@@ -19,15 +19,15 @@
         android:id="@+id/btnStart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start"
-        android:backgroundTint="#F44336"
+        android:text="@string/start_button"
+        android:backgroundTint="#2196F3"
         android:layout_marginBottom="12dp" />
 
     <Button
         android:id="@+id/btnStop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Stop"
-        android:backgroundTint="#F44336" />
+        android:text="@string/stop_button"
+        android:backgroundTint="#2196F3" />
 
 </LinearLayout>
