@@ -3,69 +3,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212"
-    android:gravity="center"
     android:orientation="vertical"
-    android:padding="32dp">
+    android:gravity="center"
+    android:padding="32dp"
+    android:background="#121212">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/app_name" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Speed snapshot"
+        android:text="@string/title_speed_snapshot"
         android:textColor="#4285F4"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginBottom="48dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Speed"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp" />
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        android:layout_marginBottom="32dp">
 
-    <TextView
-        android:id="@+id/tvSpeed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0.00 m/s"
-        android:textColor="#FFFFFF"
-        android:textSize="36sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvSpeed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/speed_initial_text"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:padding="24dp" />
 
-    <TextView
-        android:id="@+id/tvAccuracy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Accuracy: 0.0 m"
-        android:textColor="#888888"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="64dp" />
+    </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/btnStart"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Start"
-        android:textColor="#000000"
-        app:backgroundTint="#FFFFFF"
-        app:cornerRadius="12dp"
-        app:icon="@android:drawable/ic_media_play"
-        app:iconTint="#000000"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="wrap_content"
+        android:text="@string/start_button"
+        android:backgroundTint="#2196F3"
+        android:layout_marginBottom="12dp" />
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/btnStop"
-        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Stop"
-        android:textColor="#EA4335"
-        app:strokeColor="#EA4335"
-        app:cornerRadius="12dp"
-        app:icon="@android:drawable/ic_media_pause"
-        app:iconTint="#EA4335" />
+        android:layout_height="wrap_content"
+        android:text="@string/stop_button"
+        android:backgroundTint="#2196F3" />
 
 </LinearLayout>

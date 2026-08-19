@@ -16,7 +16,6 @@ import com.google.android.gms.location.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var tvSpeed: TextView
-    private lateinit var tvAccuracy: TextView
     private lateinit var btnStart: Button
     private lateinit var btnStop: Button
 
@@ -30,7 +29,6 @@ class MainActivity : AppCompatActivity() {
 
         // Bind views
         tvSpeed = findViewById(R.id.tvSpeed)
-        tvAccuracy = findViewById(R.id.tvAccuracy)
         btnStart = findViewById(R.id.btnStart)
         btnStop = findViewById(R.id.btnStop)
 
@@ -49,10 +47,7 @@ class MainActivity : AppCompatActivity() {
                 if (loc != null) {
                     val speed = loc.speed       // m/s
                     val accuracy = loc.accuracy // meters
-                    
-                    tvSpeed.text = "%.2f m/s".format(speed)
-                    tvAccuracy.text = "Accuracy: %.1f m".format(accuracy)
-                    
+                    tvSpeed.text = "Speed: ${"%.2f".format(speed)} m/s\nAccuracy: ${"%.1f".format(accuracy)} m"
                     Log.d("MainActivity", "Location received: speed=$speed")
                 }
             }
@@ -73,16 +68,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkPermissionsAndRequest(): Boolean {
-        val permissions = arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-        )
-        val missingPermissions = permissions.filter {
-            ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
-        }
-
-        if (missingPermissions.isNotEmpty()) {
-            ActivityCompat.requestPermissions(this, missingPermissions.toTypedArray(), 100)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 100
+            )
             return false
         }
         return true
@@ -95,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         try {
-            tvSpeed.text = "Searching..."
+            tvSpeed.text = "Searching for GPS..."
             fusedLocationClient.requestLocationUpdates(
                 locationRequest,
                 locationCallback,
@@ -106,16 +98,13 @@ class MainActivity : AppCompatActivity() {
             btnStop.isEnabled = true
         } catch (e: SecurityException) {
             Log.e("MainActivity", "Permission denied: ${e.message}")
-            Toast.makeText(this, "Error: Permission denied", Toast.LENGTH_SHORT).show()
+            tvSpeed.text = "Error: Permission denied"
         }
     }
 
     private fun stopLocationUpdates() {
-        if (::locationCallback.isInitialized) {
-            fusedLocationClient.removeLocationUpdates(locationCallback)
-        }
-        tvSpeed.text = "0.00 m/s"
-        tvAccuracy.text = "Accuracy: 0.0 m"
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+        tvSpeed.text = "Updates stopped"
         Toast.makeText(this, "Location updates stopped", Toast.LENGTH_SHORT).show()
         btnStart.isEnabled = true
         btnStop.isEnabled = false
@@ -123,6 +112,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        stopLocationUpdates()
+        // Optionally stop to save battery when app is in background
+        // stopLocationUpdates()
     }
 }
