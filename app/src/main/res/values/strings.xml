@@ -10,4 +10,9 @@
     <string name="speed_initial_text">Speed: — m/s\nAccuracy: — m</string>
     <string name="start_button">Start</string>
     <string name="stop_button">Stop</string>
+    <string name="title_speed_snapshot">Speed snapshot</string>
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_history">History</string>
+    <string name="nav_stats">Stats</string>
+    <string name="nav_settings">Settings</string>
 </resources>

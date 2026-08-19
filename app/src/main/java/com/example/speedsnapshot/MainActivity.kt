@@ -32,9 +32,6 @@ class MainActivity : AppCompatActivity() {
         btnStart = findViewById(R.id.btnStart)
         btnStop = findViewById(R.id.btnStop)
 
-        // Disable stop button initially
-        btnStop.isEnabled = false
-
         // Initialize location client
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -50,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 if (loc != null) {
                     val speed = loc.speed       // m/s
                     val accuracy = loc.accuracy // meters
-                    tvSpeed.text = getString(R.string.speed_accuracy_format, speed, accuracy)
+                    tvSpeed.text = "Speed: ${"%.2f".format(speed)} m/s\nAccuracy: ${"%.1f".format(accuracy)} m"
                     Log.d("MainActivity", "Location received: speed=$speed")
                 }
             }
@@ -85,30 +82,30 @@ class MainActivity : AppCompatActivity() {
 
     private fun startLocationUpdates() {
         if (!checkPermissionsAndRequest()) {
-            Toast.makeText(this, R.string.grant_location_permission, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please grant location permission", Toast.LENGTH_SHORT).show()
             return
         }
 
         try {
-            tvSpeed.text = getString(R.string.searching_gps)
+            tvSpeed.text = "Searching for GPS..."
             fusedLocationClient.requestLocationUpdates(
                 locationRequest,
                 locationCallback,
                 Looper.getMainLooper()
             )
-            Toast.makeText(this, R.string.location_updates_started, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Location updates started", Toast.LENGTH_SHORT).show()
             btnStart.isEnabled = false
             btnStop.isEnabled = true
         } catch (e: SecurityException) {
             Log.e("MainActivity", "Permission denied: ${e.message}")
-            tvSpeed.text = getString(R.string.error_permission_denied)
+            tvSpeed.text = "Error: Permission denied"
         }
     }
 
     private fun stopLocationUpdates() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
-        tvSpeed.text = getString(R.string.updates_stopped)
-        Toast.makeText(this, R.string.location_updates_stopped, Toast.LENGTH_SHORT).show()
+        tvSpeed.text = "Updates stopped"
+        Toast.makeText(this, "Location updates stopped", Toast.LENGTH_SHORT).show()
         btnStart.isEnabled = true
         btnStop.isEnabled = false
     }
@@ -116,6 +113,6 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         // Optionally stop to save battery when app is in background
-         stopLocationUpdates()
+        // stopLocationUpdates()
     }
 }
