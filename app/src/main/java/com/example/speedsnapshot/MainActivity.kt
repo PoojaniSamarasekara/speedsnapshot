@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 if (loc != null) {
                     val speed = loc.speed       // m/s
                     val accuracy = loc.accuracy // meters
-                    tvSpeed.text = "Speed: ${"%.2f".format(speed)} m/s\nAccuracy: ${"%.1f".format(accuracy)} m"
+                    tvSpeed.text = getString(R.string.speed_format, speed, accuracy)
                     Log.d("MainActivity", "Location received: speed=$speed")
                 }
             }
@@ -68,13 +68,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkPermissionsAndRequest(): Boolean {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 100
-            )
+        val permissions = arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+        )
+        val missingPermissions = permissions.filter {
+            ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
+        }
+
+        if (missingPermissions.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, missingPermissions.toTypedArray(), 100)
             return false
         }
         return true
@@ -82,30 +85,32 @@ class MainActivity : AppCompatActivity() {
 
     private fun startLocationUpdates() {
         if (!checkPermissionsAndRequest()) {
-            Toast.makeText(this, "Please grant location permission", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.grant_permission), Toast.LENGTH_SHORT).show()
             return
         }
 
         try {
-            tvSpeed.text = "Searching for GPS..."
+            tvSpeed.text = getString(R.string.searching_gps)
             fusedLocationClient.requestLocationUpdates(
                 locationRequest,
                 locationCallback,
                 Looper.getMainLooper()
             )
-            Toast.makeText(this, "Location updates started", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.updates_started), Toast.LENGTH_SHORT).show()
             btnStart.isEnabled = false
             btnStop.isEnabled = true
         } catch (e: SecurityException) {
             Log.e("MainActivity", "Permission denied: ${e.message}")
-            tvSpeed.text = "Error: Permission denied"
+            tvSpeed.text = getString(R.string.error_permission)
         }
     }
 
     private fun stopLocationUpdates() {
-        fusedLocationClient.removeLocationUpdates(locationCallback)
-        tvSpeed.text = "Updates stopped"
-        Toast.makeText(this, "Location updates stopped", Toast.LENGTH_SHORT).show()
+        if (::locationCallback.isInitialized) {
+            fusedLocationClient.removeLocationUpdates(locationCallback)
+        }
+        tvSpeed.text = getString(R.string.speed_placeholder)
+        Toast.makeText(this, getString(R.string.updates_stopped), Toast.LENGTH_SHORT).show()
         btnStart.isEnabled = true
         btnStop.isEnabled = false
     }

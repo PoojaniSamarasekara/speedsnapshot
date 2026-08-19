@@ -4,4 +4,10 @@
     <string name="label_start">Start</string>
     <string name="label_stop">Stop</string>
     <string name="speed_placeholder">Speed: -- m/s\nAccuracy: -- m</string>
+    <string name="speed_format">Speed: %.2f m/s\nAccuracy: %.1f m</string>
+    <string name="error_permission">Error: Permission denied</string>
+    <string name="searching_gps">Searching for GPS...</string>
+    <string name="updates_started">Location updates started</string>
+    <string name="updates_stopped">Location updates stopped</string>
+    <string name="grant_permission">Please grant location permission</string>
 </resources>
