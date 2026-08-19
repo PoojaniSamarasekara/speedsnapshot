@@ -4,30 +4,41 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="24dp">
+    android:padding="32dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_main"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="?attr/colorPrimary"
+        android:layout_marginBottom="48dp"/>
 
     <TextView
         android:id="@+id/tvSpeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Speed: -- m/s\nAccuracy: -- m"
-        android:textSize="22sp"
+        android:text="@string/speed_placeholder"
+        android:textSize="24sp"
         android:gravity="center"
-        android:layout_marginBottom="32dp" />
+        android:lineSpacingExtra="8dp"
+        android:layout_marginBottom="64dp" />
 
     <Button
         android:id="@+id/btnStart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Start"
-        android:backgroundTint="#F44336"
-        android:layout_marginBottom="12dp" />
+        android:layout_height="60dp"
+        android:text="@string/label_start"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp" />
 
     <Button
         android:id="@+id/btnStop"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Stop"
-        android:backgroundTint="#F44336" />
+        android:layout_height="60dp"
+        android:text="@string/label_stop"
+        android:textSize="18sp" />
 
 </LinearLayout>

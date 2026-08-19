@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">speedsnapshot</string>
+    <string name="app_name">Speed Snapshot</string>
+    <string name="title_main">Speed Snapshot</string>
+    <string name="label_start">Start</string>
+    <string name="label_stop">Stop</string>
+    <string name="speed_placeholder">Speed: -- m/s\nAccuracy: -- m</string>
 </resources>

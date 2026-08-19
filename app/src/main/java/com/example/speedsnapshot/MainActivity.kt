@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        // Optionally stop to save battery when app is in background
-        // stopLocationUpdates()
+        // Stop updates when the app is paused/backgrounded — good lifecycle practice
+        stopLocationUpdates()
     }
 }
