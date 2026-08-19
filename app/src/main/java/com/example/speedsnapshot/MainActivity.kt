@@ -16,6 +16,7 @@ import com.google.android.gms.location.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var tvSpeed: TextView
+    private lateinit var tvAccuracy: TextView
     private lateinit var btnStart: Button
     private lateinit var btnStop: Button
 
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         // Bind views
         tvSpeed = findViewById(R.id.tvSpeed)
+        tvAccuracy = findViewById(R.id.tvAccuracy)
         btnStart = findViewById(R.id.btnStart)
         btnStop = findViewById(R.id.btnStop)
 
@@ -47,7 +49,10 @@ class MainActivity : AppCompatActivity() {
                 if (loc != null) {
                     val speed = loc.speed       // m/s
                     val accuracy = loc.accuracy // meters
-                    tvSpeed.text = getString(R.string.speed_format, speed, accuracy)
+                    
+                    tvSpeed.text = "%.2f m/s".format(speed)
+                    tvAccuracy.text = "Accuracy: %.1f m".format(accuracy)
+                    
                     Log.d("MainActivity", "Location received: speed=$speed")
                 }
             }
@@ -85,23 +90,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun startLocationUpdates() {
         if (!checkPermissionsAndRequest()) {
-            Toast.makeText(this, getString(R.string.grant_permission), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please grant location permission", Toast.LENGTH_SHORT).show()
             return
         }
 
         try {
-            tvSpeed.text = getString(R.string.searching_gps)
+            tvSpeed.text = "Searching..."
             fusedLocationClient.requestLocationUpdates(
                 locationRequest,
                 locationCallback,
                 Looper.getMainLooper()
             )
-            Toast.makeText(this, getString(R.string.updates_started), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Location updates started", Toast.LENGTH_SHORT).show()
             btnStart.isEnabled = false
             btnStop.isEnabled = true
         } catch (e: SecurityException) {
             Log.e("MainActivity", "Permission denied: ${e.message}")
-            tvSpeed.text = getString(R.string.error_permission)
+            Toast.makeText(this, "Error: Permission denied", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -109,15 +114,15 @@ class MainActivity : AppCompatActivity() {
         if (::locationCallback.isInitialized) {
             fusedLocationClient.removeLocationUpdates(locationCallback)
         }
-        tvSpeed.text = getString(R.string.speed_placeholder)
-        Toast.makeText(this, getString(R.string.updates_stopped), Toast.LENGTH_SHORT).show()
+        tvSpeed.text = "0.00 m/s"
+        tvAccuracy.text = "Accuracy: 0.0 m"
+        Toast.makeText(this, "Location updates stopped", Toast.LENGTH_SHORT).show()
         btnStart.isEnabled = true
         btnStop.isEnabled = false
     }
 
     override fun onPause() {
         super.onPause()
-        // Stop updates when the app is paused/backgrounded — good lifecycle practice
         stopLocationUpdates()
     }
 }
